@@ -96,13 +96,11 @@ than the additional cores help with speed! TL;DR: normally just do `x**2` here,
 but this is how it's done with `bplapply`:
 
 We'll define a function `square()`, simply taking the square of an input numeric vector.
-Let's say we want to square the numbers 1 through 10000. Like `lapply`, `bplapply` expects
-a list as input (hence the `as.list` below), not a numeric vector.
+Let's say we want to square the numbers 1 through 10000.
 
 ```{r "square_inputs"}
 square = function(x) x**2
-
-nums_to_square = as.list(1:10000)
+nums_to_square = 1:10000
 head(nums_to_square, n = 3)
 ```
 
@@ -151,8 +149,9 @@ for (this_num_cores in time_df$n_cores) {
 ```
 
 With `ggplot2` the general relationship can be sketched out. Note that we measured elapsed time,
-which is likely responsible for most of the noise seen in the plot. Using more cores helps a
-little, but using 8 cores is nowhere near 8 times faster than using 1 core!
+which is likely responsible for most of the noise seen in the plot. While there's a slightly 
+decreasing trend to the runtime as cores increases, the overhead is so severe that we're better
+off not parallelizing at all!
 
 ```{r "plot_times"}
 ggplot(time_df) +
